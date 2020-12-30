@@ -39,7 +39,10 @@
     <ClCompile Include="src\ConsoleDebug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vec3.cpp">
+    <ClCompile Include="src\Vec3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +59,10 @@
     <ClInclude Include="src\ConsoleDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vec3.h">
+    <ClInclude Include="src\Vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

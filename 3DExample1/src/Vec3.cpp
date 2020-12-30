@@ -2,15 +2,15 @@
 
 #include <cmath>
 
-vec3_f::vec3_f()
+vec3_f::vec3_f():x(0),y(0),z(0)
 {
 }
 
-vec3_f::vec3_f(float x, float y) : x(x), y(y)
+vec3_f::vec3_f(const float x, const float y) : x(x), y(y),z(0)
 {
 }
 
-vec3_f::vec3_f(float x, float y, float z) : x(x), y(y), z(z)
+vec3_f::vec3_f(const float x, const float y, const float z) : x(x), y(y), z(z)
 {
 }
 

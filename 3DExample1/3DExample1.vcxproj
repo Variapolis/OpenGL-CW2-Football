@@ -24,14 +24,16 @@
     <ClCompile Include="src\Obstacle.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="Vec3.cpp" />
+    <ClCompile Include="src\Transform.cpp" />
+    <ClCompile Include="src\Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ConsoleDebug.h" />
+    <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Rect.h" />
     <ClInclude Include="src\Obstacle.h" />
     <ClInclude Include="src\GameObject.h" />
-    <ClInclude Include="Vec3.h" />
+    <ClInclude Include="src\Vec3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
