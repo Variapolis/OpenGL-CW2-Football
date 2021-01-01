@@ -1,5 +1,5 @@
 #pragma once
-#include "freeglut.h"
+#include <gl/freeglut.h>
 #include "ConsoleDebug.h"
 #include "Transform.h"
 class GameObject //Base class for every object, used to store position and size information.
