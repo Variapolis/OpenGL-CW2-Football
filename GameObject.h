@@ -9,5 +9,6 @@ public:
 	GameObject();
 	GameObject(float x, float y, float z);
 	void draw();
+	void remove() const;
 };
 

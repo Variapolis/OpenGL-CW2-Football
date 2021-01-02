@@ -19,6 +19,9 @@
     <Filter Include="Source Files\library">
       <UniqueIdentifier>{130d786f-c87b-4fd2-9155-ce3188d7f56f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\src code">
+      <UniqueIdentifier>{beb2e122-8a28-4ba1-9da4-4a1bb15f3678}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\shared\GLee.c">
@@ -36,29 +39,29 @@
     <ClCompile Include="..\GLee.c">
       <Filter>Source Files\library</Filter>
     </ClCompile>
-    <ClCompile Include="..\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ConsoleDebug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
     </ClCompile>
     <ClCompile Include="..\Football.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameObject.cpp">
+      <Filter>Source Files\src code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\main.cpp">
+      <Filter>Source Files\src code</Filter>
     </ClCompile>
     <ClCompile Include="..\Target.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
     </ClCompile>
     <ClCompile Include="..\TexturedPlane.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Transform.cpp">
+      <Filter>Source Files\src code</Filter>
     </ClCompile>
     <ClCompile Include="..\Wall.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,29 +107,29 @@
     <ClInclude Include="..\GLee.h">
       <Filter>Source Files\library</Filter>
     </ClInclude>
-    <ClInclude Include="..\GameObject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Transform.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ConsoleDebug.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Football.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ConsoleDebug.h">
+      <Filter>Source Files\src code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Football.h">
+      <Filter>Source Files\src code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GameObject.h">
+      <Filter>Source Files\src code</Filter>
+    </ClInclude>
     <ClInclude Include="..\Target.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
     </ClInclude>
     <ClInclude Include="..\TexturedPlane.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Transform.h">
+      <Filter>Source Files\src code</Filter>
     </ClInclude>
     <ClInclude Include="..\Wall.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

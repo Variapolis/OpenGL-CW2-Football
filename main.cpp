@@ -75,7 +75,7 @@ GLenum eFormat;
 // this is a pointer to memory where the image bytes will be held 
 GLbyte* pBytes0;
 
-Football ball = Football(TEXTURE_BALL, 20, 50, 25, 280);
+Football* ball = new Football(TEXTURE_BALL, 20, 50, 25, 280);
 
 //camera
 GLfloat cameraX = 0.0;
