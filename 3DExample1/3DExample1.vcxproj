@@ -94,8 +94,11 @@
     <ClCompile Include="..\math3d.cpp" />
     <ClCompile Include="..\shared\GLee.c" />
     <ClCompile Include="..\shared\glm.cpp" />
+    <ClCompile Include="..\Target.cpp" />
+    <ClCompile Include="..\TexturedPlane.cpp" />
     <ClCompile Include="..\Transform.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ConsoleDebug.h" />
@@ -114,7 +117,10 @@
     <ClInclude Include="..\shared\glut.h" />
     <ClInclude Include="..\shared\stopwatch.h" />
     <ClInclude Include="..\shared\wglext.h" />
+    <ClInclude Include="..\Target.h" />
+    <ClInclude Include="..\TexturedPlane.h" />
     <ClInclude Include="..\Transform.h" />
+    <ClInclude Include="..\Wall.h" />
     <ClInclude Include="..\wglext.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

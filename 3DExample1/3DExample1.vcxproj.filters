@@ -51,6 +51,15 @@
     <ClCompile Include="..\Football.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Target.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TexturedPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\shared\freeglut_std.h">
@@ -92,9 +101,6 @@
     <ClInclude Include="..\math3d.h">
       <Filter>Source Files\library</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\GLee.h">
       <Filter>Source Files\library</Filter>
     </ClInclude>
@@ -108,6 +114,18 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Football.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Target.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TexturedPlane.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Wall.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
