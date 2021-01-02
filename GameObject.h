@@ -9,6 +9,7 @@ public:
 	GameObject();
 	GameObject(float x, float y, float z);
 	void draw();
+	void scale(float);
 	void remove() const;
 };
 

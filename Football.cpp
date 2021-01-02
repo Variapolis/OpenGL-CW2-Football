@@ -1,22 +1,22 @@
 #include "Football.h"
 
-Football::Football(GLuint tex) : GameObject(), texture(tex)
+Football::Football(GLuint tex) : GameObject(), m_texture(tex)
 {
 	
 }
 
-Football::Football(GLuint tex, float r) : texture(tex), GameObject(), radius(r)
+Football::Football(GLuint tex, float r) : GameObject(), m_texture(tex), m_radius(r)
 {
-	transform.scale.x = radius;
-	transform.scale.y = radius;
-	transform.scale.z = radius;
+	transform.scale.x = m_radius;
+	transform.scale.y = m_radius;
+	transform.scale.z = m_radius;
 }
 
-Football::Football(GLuint tex, float r, float x, float y, float z  ) : texture(tex), GameObject(x,y,z), radius(r)
+Football::Football(GLuint tex, float r, float x, float y, float z  ) : GameObject(x,y,z), m_texture(tex), m_radius(r)
 {
-	transform.scale.x = radius;
-	transform.scale.y = radius;
-	transform.scale.z = radius;
+	transform.scale.x = m_radius;
+	transform.scale.y = m_radius;
+	transform.scale.z = m_radius;
 }
 
 void Football::draw()
@@ -29,15 +29,15 @@ void Football::draw()
 	glRotatef(transform.rotation.z, 0, 0, 1);
 	// Create and texture the ball
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 	// glDisable(GL_LIGHTING);
 	glColor3f(0.5, 0.5, 0.5);
-	quadricBall = gluNewQuadric();
-	gluQuadricDrawStyle(quadricBall, GLU_FILL);
-	gluQuadricNormals(quadricBall, GLU_SMOOTH);
-	gluQuadricOrientation(quadricBall, GLU_OUTSIDE);
-	gluQuadricTexture(quadricBall, GL_TRUE);
-	gluSphere(quadricBall, radius, 50, 35);
+	m_quadricBall = gluNewQuadric();
+	gluQuadricDrawStyle(m_quadricBall, GLU_FILL);
+	gluQuadricNormals(m_quadricBall, GLU_SMOOTH);
+	gluQuadricOrientation(m_quadricBall, GLU_OUTSIDE);
+	gluQuadricTexture(m_quadricBall, GL_TRUE);
+	gluSphere(m_quadricBall, m_radius, 50, 35);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }

@@ -1,5 +1,7 @@
 #include "ConsoleDebug.h"
 
+#include "Vector3.h"
+
 // File used  to contain Debug functions neatly.
 
 void Log(std::string message){
@@ -16,7 +18,12 @@ void LogIntValue(std::string message, int value) // Log overload
 	std::cout << "DebugValue Log: " << message << value << std::endl;
 }
 
-void LogIntro()
+void LogIntValue(std::string message, Vector3 value) // Log overload
+{
+	std::cout << "DebugValue Log: " << message << "X: " << value.x << "Y: " << value.y << "Z: " << value.z << std::endl;
+}
+
+void LogIntro() // TODO Change intro
 {
 	std::cout << "Welcome to my Car Game! By Tautvydas Marcinkevicius"<< std::endl;
 	std::cout << "W - Move Up" << std::endl;

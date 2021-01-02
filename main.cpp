@@ -9,8 +9,11 @@
 #include <iostream>	//Needed for console output (debugging)
 #include <gl/freeglut.h>
 #include <iostream>
+#include "Vector3.h"
 
 #include "Football.h"
+#include "TexturedPlane.h"
+#include "Wall.h"
 
 #ifdef WIN32
 #include "gltools.h"
@@ -29,18 +32,31 @@
 
 //can define any number of textures here - we just have 2 images
 //these are just integers so you can use them as such
-#define IMAGE1      0
-#define IMAGE2      1
-#define IMAGE3      2
-#define IMAGE4      3
-#define TEXTURE_BALL 6    //football map
-#define TEXTURE_COUNT 5
+#define GRASS_TEX      2
+#define WALL_TEX      3
+#define WALL_OLD_TEX      4
+#define FLOWER_ORANGE_TEX      5
+#define FLOWER_PALM_TEX      6
+#define FLOWER_YELLOW_TEX      7
+#define BALL_TEX 8    //football map
+#define SKY_TEX 9
+#define TARGET_BLUE_TEX 10
+#define TARGET_RED_TEX 11
+#define TARGET_GREEN_TEX 12
+#define TARGET_DULL_TEX 13
+
+
+#define TEXTURE_COUNT 12
 GLuint  textures[TEXTURE_COUNT];
+
+//Game Constants
+#define NUMBER_OF_WALLS 3
 
 //below is simply a character array to hold the file names
 //note that you may need to replace the below with the full directory root depending on where you put your image files
 //if you put them where the exe is then you just need the name as below - THESE IMAGES  ARE IN THE DEBUG FOLDER, YOU CAN ADD ANY NEW ONES THERE 
-const char* textureFiles[TEXTURE_COUNT] = { "pingu.tga", "horse.tga","floor.tga","stone.tga","FootballCompleteMap.tga" };
+const char* textureFiles[TEXTURE_COUNT] = { "grass_diff.tga", "brick_texture_lo_res.tga","old_wall_texture_TGA.tga","orangeFlowerFinal5.tga",
+	"palmBranchA.tga", "yellowFlowerFinal.tga","FootballCompleteMap.tga", "stormydays_large.tga", "targetBlue.tga", "targetRed.tga","targetGreen.tga", "targetDull.tga"  };
 
 
 //for lighting if you want to experiment with these
@@ -75,7 +91,12 @@ GLenum eFormat;
 // this is a pointer to memory where the image bytes will be held 
 GLbyte* pBytes0;
 
-Football* ball = new Football(TEXTURE_BALL, 20, 50, 25, 280);
+Football ball = Football(BALL_TEX, 5, 0, 5, 0);
+TexturedPlane lawn = TexturedPlane(GRASS_TEX, 0, 0, 90);
+TexturedPlane flower = TexturedPlane(FLOWER_ORANGE_TEX, 0, 10, 12);
+TexturedPlane flower2 = TexturedPlane(FLOWER_ORANGE_TEX, 10, 10, 12);
+TexturedPlane target = TexturedPlane(TARGET_BLUE_TEX, 10, 10, 11);
+
 
 //camera
 GLfloat cameraX = 0.0;
@@ -87,8 +108,10 @@ bool repeatWallOn = false;
 bool moveCamera = false;
 
 
-//end of intialisation 
+//end of intialisation
 
+//Quads functions commented.
+/*
 //---------------This function is used for Images 1 and 2---------------------//
 void drawTexturedQuad(int image)
 {
@@ -170,11 +193,13 @@ void drawTexturedSurfaceNoTiling(int image)
 
 //---------This is used for the football ball-------//
 
+*/
+
 // Called to draw scene
 void RenderScene(void)
 {
-	ball.transform.position.z += 2;
-	ball.transform.rotation.x += 2;
+	//ball.transform.position.z += 0.2f;
+	//ball.transform.rotation.x += 2;
 	
 	// Clear the window with current clearing colour
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -183,60 +208,28 @@ void RenderScene(void)
 	glLoadIdentity();
 
 	// view the scene
-	gluLookAt(ball.transform.position.x , ball.transform.position.y +50, ball.transform.position.z + 50,//eye
+	gluLookAt(ball.transform.position.x , ball.transform.position.y +50, ball.transform.position.z -50,//eye
 		ball.transform.position.x, ball.transform.position.y, ball.transform.position.z,//centre
 		0.00, 1.00, 0.00);//up
 
 
-	glPushMatrix();
-	//rotate and then translate the quad 
-	//glTranslatef(0.0, -100.0, 0.0);
-	////try setting to -185.0 to see the back of the quad
-	//glRotatef(-15.0, 0.0, 1.0, 0.0);
-
-	glTranslatef(-150.0, -100.0, 100.0);
-	glRotatef(-80, 1.0, 0.0, 0.0);
-	drawTexturedQuad(IMAGE2);
-	glPopMatrix();
-
-
-	//new position after roating and translating
-	glPushMatrix();
-	//rotate the quad slightly
-	glTranslatef(0.0, 30.0, -100.0);
-	glRotatef(15.0, 0.0, 1.0, 0.0);
-	glRotatef(5.0, 1.0, 0.0, 0.0);
-	glRotatef(3.0, 0.0, 0.0, 1.0);
-	drawTexturedQuad(IMAGE1);
-	glPopMatrix();
-
-	ball.draw();
 	
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, -400.0);
-	glRotatef(-90.0, 1.0, 0.0, 0.0);
-	//drawTexturedSurfaceNoTiling(IMAGE3);
-	if (repeatOn)
-	{
-		drawTexturedSurface(IMAGE3);
-	}
-	else
-	{
-		drawTexturedSurfaceNoTiling(IMAGE3);
-	}
-	glPopMatrix();
-
-
+	ball.draw();
+	lawn.draw();
+	flower.draw();
+	target.draw();
+	
+	
 	glPushMatrix();
 	glTranslatef(0.0, 0.0, -350.0);
 	//drawTexturedSurfaceNoTiling(IMAGE4);
 	if (repeatWallOn)
 	{
-		drawTexturedSurface(IMAGE4);
+		//drawTexturedSurface(IMAGE4);
 	}
 	else
 	{
-		drawTexturedSurfaceNoTiling(IMAGE4);
+		//drawTexturedSurfaceNoTiling(IMAGE4);
 	}
 	glPopMatrix();
 
@@ -304,13 +297,13 @@ void SetupRC()
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, mKs);
 	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 60.0f);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
 
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, whiteLightBright);
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos2);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, mKs);
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 60.0f);
-	//glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT1);
 
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, whiteLightBright);
 	glLightfv(GL_LIGHT2, GL_POSITION, lightPos3);
@@ -406,7 +399,13 @@ void ChangeSize(int w, int h)
 // Object and other generic initialization to prevent clutter from SetupRC
 void init()
 {
-
+	lawn.transform.scale.x *= 15;
+	lawn.transform.scale.y *= 20;
+	lawn.transform.rotation.x = 90;
+	flower.scale(2);
+	target.scale(2);
+	target.transform.rotation.y = 180;
+	
 }
 
 int main(int argc, char* argv[])
