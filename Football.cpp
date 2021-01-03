@@ -22,6 +22,7 @@ Football::Football(GLuint tex, float r, float x, float y, float z  ) : GameObjec
 void Football::draw()
 {
 	glPushMatrix();
+	
 	glFrontFace(GL_CCW);
 	glTranslatef(transform.position.x, transform.position.y, transform.position.z);
 	glRotatef(transform.rotation.x, 1,0,0);

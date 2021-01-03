@@ -63,6 +63,9 @@
     <ClCompile Include="..\Wall.cpp">
       <Filter>Source Files\src code</Filter>
     </ClCompile>
+    <ClCompile Include="..\GUI.cpp">
+      <Filter>Source Files\src code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\shared\freeglut_std.h">
@@ -129,6 +132,9 @@
       <Filter>Source Files\src code</Filter>
     </ClInclude>
     <ClInclude Include="..\Wall.h">
+      <Filter>Source Files\src code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI.h">
       <Filter>Source Files\src code</Filter>
     </ClInclude>
   </ItemGroup>

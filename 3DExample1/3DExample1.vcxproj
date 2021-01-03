@@ -91,6 +91,7 @@
     <ClCompile Include="..\GameObject.cpp" />
     <ClCompile Include="..\GLee.c" />
     <ClCompile Include="..\gltools.cpp" />
+    <ClCompile Include="..\GUI.cpp" />
     <ClCompile Include="..\math3d.cpp" />
     <ClCompile Include="..\shared\GLee.c" />
     <ClCompile Include="..\shared\glm.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="..\GameObject.h" />
     <ClInclude Include="..\GLee.h" />
     <ClInclude Include="..\gltools.h" />
+    <ClInclude Include="..\GUI.h" />
     <ClInclude Include="..\math3d.h" />
     <ClInclude Include="..\shared\freeglut.h" />
     <ClInclude Include="..\shared\freeglut_ext.h" />

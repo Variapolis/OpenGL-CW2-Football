@@ -12,6 +12,7 @@
 #include "Vector3.h"
 
 #include "Football.h"
+#include "GUI.h"
 #include "TexturedPlane.h"
 #include "Wall.h"
 
@@ -44,9 +45,11 @@
 #define TARGET_RED_TEX 11
 #define TARGET_GREEN_TEX 12
 #define TARGET_DULL_TEX 13
+#define GUI_HORIZONTAL 14
+#define GUI_VERTICAL 15
 
 
-#define TEXTURE_COUNT 12
+#define TEXTURE_COUNT 14
 GLuint  textures[TEXTURE_COUNT];
 
 //Game Constants
@@ -56,7 +59,7 @@ GLuint  textures[TEXTURE_COUNT];
 //note that you may need to replace the below with the full directory root depending on where you put your image files
 //if you put them where the exe is then you just need the name as below - THESE IMAGES  ARE IN THE DEBUG FOLDER, YOU CAN ADD ANY NEW ONES THERE 
 const char* textureFiles[TEXTURE_COUNT] = { "grass_diff.tga", "brick_texture_lo_res.tga","old_wall_texture_TGA.tga","orangeFlowerFinal5.tga",
-	"palmBranchA.tga", "yellowFlowerFinal.tga","FootballCompleteMap.tga", "stormydays_large.tga", "targetBlue.tga", "targetRed.tga","targetGreen.tga", "targetDull.tga"  };
+	"palmBranchA.tga", "yellowFlowerFinal.tga","FootballCompleteMap.tga", "stormydays_large.tga", "targetBlue.tga", "targetRed.tga","targetGreen.tga", "targetDull.tga", "fillBarHorizontal.tga", "fillBarVerticalR.tga"  };
 
 
 //for lighting if you want to experiment with these
@@ -91,21 +94,70 @@ GLenum eFormat;
 // this is a pointer to memory where the image bytes will be held 
 GLbyte* pBytes0;
 
-Football ball = Football(BALL_TEX, 5, 0, 5, 0);
-TexturedPlane lawn = TexturedPlane(GRASS_TEX, 0, 0, 90);
-TexturedPlane flower = TexturedPlane(FLOWER_ORANGE_TEX, 0, 10, 12);
-TexturedPlane flower2 = TexturedPlane(FLOWER_ORANGE_TEX, 10, 10, 12);
-TexturedPlane target = TexturedPlane(TARGET_BLUE_TEX, 10, 10, 11);
+Football ball = Football(BALL_TEX, 5);
+TexturedPlane lawn = TexturedPlane(GRASS_TEX);
+TexturedPlane flower = TexturedPlane(FLOWER_ORANGE_TEX);
+TexturedPlane flower2 = TexturedPlane(FLOWER_ORANGE_TEX);
+TexturedPlane target = TexturedPlane(TARGET_BLUE_TEX);
+Wall wall1 = Wall(WALL_TEX);
+Wall wall2 = Wall(WALL_TEX);
+Wall wall3 = Wall(WALL_TEX);
+GUI horzBar = GUI(GUI_HORIZONTAL);
+GUI vertBar = GUI(GUI_VERTICAL);
 
+GLfloat fAspect;
 
 //camera
 GLfloat cameraX = 0.0;
-GLfloat cameraY = 100.0;
-GLfloat cameraZ = 500.0;
+GLfloat cameraY = 20.0;
+GLfloat cameraZ = -50.0;
 
 bool repeatOn = false;
 bool repeatWallOn = false;
 bool moveCamera = false;
+
+// Scene setup.
+void init()
+{
+	ball.transform.position = Vector3(0, 5, 0);
+	lawn.transform.position = Vector3(0, 0, 30);
+	flower.transform.position = Vector3(0, 10, 100);
+	flower2.transform.position = Vector3(10, 10, 100);
+	target.transform.position = Vector3(10, 20, 105);
+	
+	wall1.transform.position = Vector3(-40, 15, 50);
+	wall1.transform.rotation.y = 90;
+	wall1.transform.scale.x *= 2.5;
+
+	wall2.transform.position = Vector3(0, 15, 110);
+	wall2.transform.rotation.y = 180;
+	wall2.transform.scale.x *= 2;
+
+	wall3.transform.position = Vector3(40, 15, 50);
+	wall3.transform.rotation.y = 270;
+	wall3.transform.scale.x *= 2.5;
+	
+	lawn.transform.scale.x *= 15;
+	lawn.transform.scale.y *= 20;
+	lawn.transform.rotation.x = 90;
+	
+	flower.scale(2);
+	
+	target.scale(2);
+	target.transform.rotation.y = 180;
+
+	horzBar.transform.position.x = 2;
+	horzBar.transform.position.y = 9.5;
+	horzBar.transform.scale.y /= 2;
+
+	vertBar.transform.position.x = 0.9;
+	vertBar.transform.position.y = 8.75;
+	vertBar.transform.scale.y /= 4;
+	vertBar.transform.scale.x *= 2;
+	vertBar.transform.rotation.z = 90;
+	
+
+}
 
 
 //end of intialisation
@@ -195,29 +247,66 @@ void drawTexturedSurfaceNoTiling(int image)
 
 */
 
+void ChangeSize(int w, int h)
+{
+	
+	// Prevent a divide by zero
+	if (h == 0)
+		h = 1;
+
+	// Set Viewport to window dimensions
+	glViewport(0, 0, w, h);
+
+	// Calculate aspect ratio of the window
+	fAspect = (GLfloat)w / (GLfloat)h;
+
+	// Set the perspective coordinate system
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	// field of view of 45 degrees, near and far planes 1.0 and 1000
+	//that znear and zfar should typically have a ratio of 1000:1 to make sorting out z depth easier for the GPU
+	gluPerspective(45.0f, fAspect, 1.0, 1000.0);
+
+	// Modelview matrix reset
+	glMatrixMode(GL_MODELVIEW);
+}
+
 // Called to draw scene
 void RenderScene(void)
-{
-	//ball.transform.position.z += 0.2f;
-	//ball.transform.rotation.x += 2;
-	
+{	
 	// Clear the window with current clearing colour
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, fAspect, 1.0, 1000.0); // Dumb hacky way to reset the perspective after rendering GUI
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	// view the scene
-	gluLookAt(ball.transform.position.x , ball.transform.position.y +50, ball.transform.position.z -50,//eye
-		ball.transform.position.x, ball.transform.position.y, ball.transform.position.z,//centre
-		0.00, 1.00, 0.00);//up
-
-
-	
-	ball.draw();
+	if (moveCamera)
+	{
+		// view the scene
+		gluLookAt(ball.transform.position.x + cameraX, ball.transform.position.y + cameraY, ball.transform.position.z + cameraZ,//eye
+			ball.transform.position.x, ball.transform.position.y, ball.transform.position.z,//centre
+			0.00, 1.00, 0.00);//up
+	}
+	else
+	{
+		gluLookAt(0.00, 20.00, -40.00,
+			0.00, 15.00, 0.00,
+			0.00, 1.00, 0.00);
+	}
 	lawn.draw();
-	flower.draw();
+	wall1.draw();
+	wall2.draw();
+	wall3.draw();
+	ball.draw();
 	target.draw();
+	
+	flower.draw();
+	
+	
 	
 	
 	glPushMatrix();
@@ -232,7 +321,8 @@ void RenderScene(void)
 		//drawTexturedSurfaceNoTiling(IMAGE4);
 	}
 	glPopMatrix();
-
+	horzBar.draw();
+	vertBar.draw();
 	glutSwapBuffers();
 }
 
@@ -332,11 +422,11 @@ void TimerFunc(int value)
 	//move camera
 	if (moveCamera)
 	{
-		cameraZ = cameraZ - 2;
+		/*cameraZ = cameraZ - 2;
 		if (cameraZ > 300.0)
 		{
 			cameraY = cameraY + 0.3;
-		}
+		}*/
 	}
 	glutPostRedisplay();
 	glutTimerFunc(25, TimerFunc, 1);
@@ -370,43 +460,8 @@ void ProcessMenu(int choice)
 	glutPostRedisplay();
 }
 
-void ChangeSize(int w, int h)
-{
-	GLfloat fAspect;
 
-	// Prevent a divide by zero
-	if (h == 0)
-		h = 1;
 
-	// Set Viewport to window dimensions
-	glViewport(0, 0, w, h);
-
-	// Calculate aspect ratio of the window
-	fAspect = (GLfloat)w / (GLfloat)h;
-
-	// Set the perspective coordinate system
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	// field of view of 45 degrees, near and far planes 1.0 and 1000
-	//that znear and zfar should typically have a ratio of 1000:1 to make sorting out z depth easier for the GPU
-	gluPerspective(55.0f, fAspect, 1.0, 1000.0);
-
-	// Modelview matrix reset
-	glMatrixMode(GL_MODELVIEW);
-}
-
-// Object and other generic initialization to prevent clutter from SetupRC
-void init()
-{
-	lawn.transform.scale.x *= 15;
-	lawn.transform.scale.y *= 20;
-	lawn.transform.rotation.x = 90;
-	flower.scale(2);
-	target.scale(2);
-	target.transform.rotation.y = 180;
-	
-}
 
 int main(int argc, char* argv[])
 {

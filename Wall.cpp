@@ -18,8 +18,8 @@ void Wall::draw()
 	//add some lighting normals for each vertex
 	//draw the texture on the front
 	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// glFrontFace(GL_CW); //use glFrontFace(GL_CW) to texture the other side - not needed here as we set this elsewhere
 	glColor3f(0.8, 0.8, 0.8);
 	glEnable(GL_TEXTURE_2D);
