@@ -54,6 +54,7 @@ GLuint  textures[TEXTURE_COUNT];
 
 //Game Constants
 #define NUMBER_OF_WALLS 3
+#define MAX_VELOCITY 2.0f
 
 //below is simply a character array to hold the file names
 //note that you may need to replace the below with the full directory root depending on where you put your image files
@@ -107,10 +108,13 @@ GUI vertBar = GUI(GUI_VERTICAL);
 
 GLfloat fAspect;
 
+Vector3 kickVelocity = {0,0,3};
+bool isShooting;
+
 //camera
 GLfloat cameraX = 0.0;
-GLfloat cameraY = 20.0;
-GLfloat cameraZ = -50.0;
+GLfloat cameraY = 150.0;
+GLfloat cameraZ = -20.0;
 
 bool repeatOn = false;
 bool repeatWallOn = false;
@@ -119,8 +123,9 @@ bool moveCamera = false;
 // Scene setup.
 void init()
 {
-	ball.transform.position = Vector3(0, 5, 0);
+	ball.transform.position = {0, 5, 0};
 	lawn.transform.position = Vector3(0, 0, 30);
+	lawn.scale(3);
 	flower.transform.position = Vector3(0, 10, 100);
 	flower2.transform.position = Vector3(10, 10, 100);
 	target.transform.position = Vector3(10, 20, 105);
@@ -272,6 +277,7 @@ void ChangeSize(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 }
 
+
 // Called to draw scene
 void RenderScene(void)
 {	
@@ -280,7 +286,7 @@ void RenderScene(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0f, fAspect, 1.0, 1000.0); // Dumb hacky way to reset the perspective after rendering GUI
+	gluPerspective(45.0f, fAspect, 1.0, 1000.0); // Dumb hacky way to reset the perspective after rendering GUI (Dumb hack was to make fAspect global)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -288,7 +294,7 @@ void RenderScene(void)
 	{
 		// view the scene
 		gluLookAt(ball.transform.position.x + cameraX, ball.transform.position.y + cameraY, ball.transform.position.z + cameraZ,//eye
-			ball.transform.position.x, ball.transform.position.y, ball.transform.position.z,//centre
+			ball.transform.position.x, ball.transform.position.y, ball.transform.position.z+50,//centre
 			0.00, 1.00, 0.00);//up
 	}
 	else
@@ -305,7 +311,10 @@ void RenderScene(void)
 	target.draw();
 	
 	flower.draw();
-	
+	if(isShooting)
+	{
+		ball.transform.position = ball.transform.position + kickVelocity;
+	}
 	
 	
 	
@@ -321,6 +330,9 @@ void RenderScene(void)
 		//drawTexturedSurfaceNoTiling(IMAGE4);
 	}
 	glPopMatrix();
+
+	horzBar.value = kickVelocity.x / MAX_VELOCITY/2;
+	vertBar.value = kickVelocity.y / MAX_VELOCITY - 0.5;
 	horzBar.draw();
 	vertBar.draw();
 	glutSwapBuffers();
@@ -445,12 +457,6 @@ void ProcessMenu(int choice)
 		break;
 	case 3:
 		moveCamera = !moveCamera;
-		if (!moveCamera)
-		{
-			cameraX = 0.0;
-			cameraY = 100.0;
-			cameraZ = 500.0;
-		}
 		break;
 
 	default:
@@ -460,7 +466,45 @@ void ProcessMenu(int choice)
 	glutPostRedisplay();
 }
 
+void specialKeyboard(int key, int x, int y) // Keyboard actions
+{
+	if (!isShooting)
+	{
+		switch (key)
+		{
 
+		case GLUT_KEY_UP:
+			if (kickVelocity.y < MAX_VELOCITY) { kickVelocity.y += 0.1; }
+			break;
+		case GLUT_KEY_DOWN:
+			if (kickVelocity.y > 0) { kickVelocity.y -= 0.1; }
+			else { kickVelocity.y = 0; }
+			break;
+		case GLUT_KEY_RIGHT:
+			if (kickVelocity.x > -MAX_VELOCITY) { kickVelocity.x -= 0.1; }
+			break;
+		case GLUT_KEY_LEFT:
+			if (kickVelocity.x < MAX_VELOCITY) { kickVelocity.x += 0.1; }
+			break;
+		}
+	}
+}
+
+void keyboard(unsigned char key, int x, int y) // Keyboard actions
+{
+	switch (key)
+	{
+
+	case ' ':
+	case 'z':
+		isShooting = true;
+		break;
+	case 'r':
+		isShooting = false;
+		ball.transform.position = { 0,5,0 };
+		break;
+	}
+}
 
 
 int main(int argc, char* argv[])
@@ -477,6 +521,8 @@ int main(int argc, char* argv[])
 	glutAddMenuEntry("Toggle repeated texture", 1);
 	glutAddMenuEntry("Toggle repeated wall", 2);
 	glutAddMenuEntry("Toggle camera movement", 3);
+	glutKeyboardFunc(keyboard);
+	glutSpecialFunc(specialKeyboard);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	SetupRC();
 	init();

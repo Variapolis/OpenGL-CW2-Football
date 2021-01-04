@@ -45,7 +45,22 @@ void GUI::draw()
 	glTexCoord2f(0.0, 1.0);
 	glVertex3f(-transform.scale.x / 2, transform.scale.y / 2, 0);
 	glEnd();
+
+	glTranslatef(-value*transform.scale.x, 0, 0); // Bar is in the same place regardless of scale.
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-transform.scale.x / 32, -transform.scale.y / 1.5, 0.1);
+	glTexCoord3f(0.01, 0.0, 0.0);
+	glVertex3f(transform.scale.x / 32, -transform.scale.y / 1.5, 0.1);
+	glTexCoord2f(0.01, 0.01);
+	glVertex3f(transform.scale.x / 32, transform.scale.y / 1.5, 0.1);
+	glTexCoord2f(0.0, 0.01);
+	glVertex3f(-transform.scale.x / 32, transform.scale.y / 1.5, 0.1);
+	glEnd();
+	
 	glDisable(GL_TEXTURE_2D);
+
+	
 	glPopMatrix();
 	glFlush();
 }
