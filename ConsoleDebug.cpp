@@ -25,11 +25,13 @@ void LogIntValue(std::string message, Vector3 value) // Log overload
 
 void LogIntro() // TODO Change intro
 {
-	std::cout << "Welcome to my Car Game! By Tautvydas Marcinkevicius"<< std::endl;
-	std::cout << "W - Move Up" << std::endl;
-	std::cout << "S - Move Down" << std::endl;
-	std::cout << "A - Move Left" << std::endl;
-	std::cout << "D - Move Right" << std::endl;
-	std::cout << "R - Rotate 90" << std::endl;
-	std::cout << "Reach the red gate and avoid the obstacles!" << std::endl;
+	std::cout << "Welcome to my Football Game! "<< std::endl;
+	std::cout << "Up Arrow - Aim Higher" << std::endl;
+	std::cout << "Down Arrow - Aim Lower" << std::endl;
+	std::cout << "Left Arrow - Aim Left" << std::endl;
+	std::cout << "Right Arrow - Aim Right" << std::endl;
+	std::cout << "Space or Z - Shoot" << std::endl;
+	std::cout << "R - Restart" << std::endl;
+	std::cout << "F - Follow ball" << std::endl;
+	std::cout << "Hit the targets to win." << std::endl;
 }

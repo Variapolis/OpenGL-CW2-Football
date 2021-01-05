@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector3.h"
 
-class Transform {
+class Transform { // Contains all translational data for the object.
 public:
 	Vector3 position;
 	Vector3 rotation;

@@ -20,7 +20,7 @@ void TexturedPlane::draw()
 	glColor3f(0.8, 0.8, 0.8);
 	glEnable(GL_TEXTURE_2D);
 
-	// translates to object position. TODO MY OWN COMMENT
+	// translates to object position.
 	glTranslatef(transform.position.x, transform.position.y, transform.position.z);
 	glRotatef(transform.rotation.x, 1, 0, 0);
 	glRotatef(transform.rotation.y, 0, 1, 0);

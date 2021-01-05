@@ -19,8 +19,40 @@ Football::Football(GLuint tex, float r, float x, float y, float z  ) : GameObjec
 	transform.scale.z = m_radius;
 }
 
-void Football::draw()
+bool Football::checkPlaneCollision(GameObject plane)
 {
+	bool collision = true;
+	const Vector3 tempScale = plane.transform.scale;
+	Vector3 adjustedScale = tempScale;
+	if (plane.transform.rotation.x == 90 || plane.transform.rotation.x == 270) // Adjusts the scale vector for AABB to account for 90 degree rotations.
+	{
+		adjustedScale.z = tempScale.y;
+		adjustedScale.y = tempScale.z;
+	}
+	if (plane.transform.rotation.y == 90 || plane.transform.rotation.y == 270)
+	{
+		adjustedScale.x = tempScale.z;
+		adjustedScale.z = tempScale.x;
+	}
+	if (plane.transform.rotation.z == 90 || plane.transform.rotation.z == 270)
+	{
+		adjustedScale.x = tempScale.y;
+		adjustedScale.y = tempScale.x;
+	}
+
+	
+	for (int i = 0; i < 3; i++) // Checks each axis using AABB.
+	{
+		collision = ((transform.position[i] - m_radius/2 <= plane.transform.position[i] + adjustedScale[i]/2
+			&& transform.position[i] + m_radius/2 >= plane.transform.position[i] - adjustedScale[i]/2)
+			&& collision);
+	}
+	return collision;
+}
+
+void Football::draw() // draws a quadric sphere, and sets the rotation and translation according to the Object's Transform.
+{
+	
 	glPushMatrix();
 	
 	glFrontFace(GL_CCW);

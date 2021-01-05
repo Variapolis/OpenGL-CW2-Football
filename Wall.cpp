@@ -24,7 +24,7 @@ void Wall::draw()
 	glColor3f(0.8, 0.8, 0.8);
 	glEnable(GL_TEXTURE_2D);
 
-	// translates to object position. TODO MY OWN COMMENT
+	// translates to object position. 
 	glTranslatef(transform.position.x, transform.position.y, transform.position.z);
 	glRotatef(transform.rotation.x, 1, 0, 0);
 	glRotatef(transform.rotation.y, 0, 1, 0);
@@ -33,7 +33,7 @@ void Wall::draw()
 	//binds the texture 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	glBegin(GL_QUAD_STRIP);
+	glBegin(GL_QUAD_STRIP); // maps the brick texture to a quad strip, first face is the wall, second face is top lip.
 	glNormal3f(0.0f, 0.0f, 1.0f);
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(-transform.scale.x / 2, -transform.scale.y / 2, transform.scale.z /2);

@@ -3,8 +3,8 @@
 class TexturedPlane :
     public GameObject
 {
-	GLuint m_texture;
 public:
+	GLuint m_texture;
 	TexturedPlane(GLuint tex);
 	TexturedPlane(GLuint tex, float x, float y, float z);
 	void draw();

@@ -5,7 +5,7 @@
 class GameObject //Base class for every object, used to store position and size information.
 {
 public:
-	Transform transform;
+	Transform transform; // Transform holds position, scale and rotational information.
 	GameObject();
 	GameObject(float x, float y, float z);
 	void draw();

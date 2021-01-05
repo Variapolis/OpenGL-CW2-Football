@@ -10,6 +10,7 @@ public:
 	Football::Football(GLuint tex);
 	Football::Football(GLuint tex, float r);
 	Football::Football(GLuint tex, float r, float x, float y, float z);
+	bool checkPlaneCollision(GameObject);
 	void draw();
 };
 

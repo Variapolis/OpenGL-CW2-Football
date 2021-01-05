@@ -9,7 +9,7 @@ public:
 	float value;
 	GUI(GLuint tex);
 	GUI(GLuint tex, float x, float y);
-	void draw();
+	void draw(float w, float h);
 	
 };
 
