@@ -80,6 +80,8 @@ TexturedPlane fern6 = TexturedPlane(FLOWER_PALM_TEX);
 TexturedPlane fern7 = TexturedPlane(FLOWER_PALM_TEX);
 TexturedPlane fern8 = TexturedPlane(FLOWER_PALM_TEX);
 
+TexturedPlane start = TexturedPlane(TARGET_DULL_TEX);
+
 
 Target target20_1 = Target(TARGET_BLUE_TEX, 20, 7.5);
 Target target20_2 = Target(TARGET_BLUE_TEX, 20, 7.5);
@@ -350,6 +352,9 @@ GLfloat gCubeVertexdataNormals[108] =
 // Scene setup.
 void scene()
 {
+	start.transform.rotation = { 270, 0, 0 };
+	start.transform.position = { 0,1,0 };
+	
 	ball.transform.position = {0, 5, 0};
 	lawn.transform.position = Vector3(0, 0, 30);
 	lawn.scale(3);
@@ -444,6 +449,7 @@ void scene()
 
 	vertBar.transform.rotation.z = 90;
 
+	LogIntro();
 	score = 0;
 	ballVelocity = kickVelocity;
 	attempts = NUM_ATTEMPTS
@@ -580,6 +586,7 @@ void RenderScene(void)
 	target30_1.draw();
 	target30_2.draw();
 	target30_3.draw();
+	start.draw();
 	
 	flower.draw();
 	flower2.draw();
@@ -596,7 +603,7 @@ void RenderScene(void)
 	
 	if(isShooting) // If the ball is currently shooting, sets the position vector of the ball to be the sum of position and velocity.
 	{
-		ballVelocity = ballVelocity + gravity;
+		ballVelocity = ballVelocity + gravity; // Gravity acceleration
 		ball.transform.position = ball.transform.position + ballVelocity;
 		ball.transform.rotation.x += ballVelocity.z * SPIN_MULTIPLIER;
 
